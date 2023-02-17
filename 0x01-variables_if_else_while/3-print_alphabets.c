@@ -2,7 +2,7 @@
 #include <unistd.h>
 /**
  * main - Entry point
- * Description: prints the alphabet in lowercase\n
+ * Description: prints the alphabet in lowercase
  * Return: Always 0 (success)
  */
 int main(void)
