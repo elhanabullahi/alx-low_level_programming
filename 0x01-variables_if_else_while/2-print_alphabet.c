@@ -1,31 +1,18 @@
 #include <stdio.h>
 #include <unistd.h>
 /**
- * main - Entyr point
- * Description: prints two digits combination
+ * main - Entry point
+ * Description: prints the alphabet in lowercase\n
  * Return: Always 0 (success)
  */
 int main(void)
 {
-	int c, i;
+	int ch;
 
-	for (c = '0'; c <= '9'; c++)
+	for (ch = 'a'; ch <= 'z'; ch++)
 	{
-		for (i = '0'; i <= '9'; i++)
-		{
-			if (c < i)
-			{
-				putchar(c);
-				putchar(i);
-
-				if (c != '8' || (c == '8' && i != '9'))
-				{
-					putchar(',');
-					putchar(' ');
-				}
-			}
-		}
+		putchar(ch);
 	}
 	putchar('\n');
-	return (0);
+return (0);
 }
