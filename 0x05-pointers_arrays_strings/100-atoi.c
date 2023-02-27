@@ -1,30 +1,30 @@
 #include "main.h"
 #include "2-strlen.c"
 
-/**
- * _strcpy - function declaration
- * @dest: destination to copy
- * @src: source to copy
- * Return: destination
- */
-
-char *_strcpy(char *dest, char *src);
 
 /**
- * _strcpy - function declaration
- * Description:function that convert a string to an integer
- * @dest: destination to copy to
- * @src: source to copy from
- * Return: destination
+ * _atoi - convert a string to an integer.
+ * @s: the string to be comverted.
+ *
+ *Return: The integer value of the comverted string.
  */
 
-char *_strcpy(char *dest, char *src)
+int _atoi(char *s)
 {
-	int index;
+	int sign = 1;
+	unsigned int num = 0;
 
-	for (index = 0; index <= _strlen(src); index++)
-	{
-		dest[index] = src[index];
-	}
-	return (dest);
+	do {
+
+		if (*s == '-')
+			sign *= -1;
+
+		else if (*s >= '0' && *s <= '9')
+			num = (num * 10) + (*s - '0');
+
+		else if (num > 0)
+			break;
+	} while (*s++);
+
+	return (num * sign);
 }
