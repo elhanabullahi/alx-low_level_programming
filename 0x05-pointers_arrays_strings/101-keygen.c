@@ -4,7 +4,7 @@
 
 /**
  * main - generates random passwords for 101-crackme object code
- * Description: This is not my original work
+ * Description: program that generates random valid passwords for the program
  * Return: zero
  */
 int main(void)
