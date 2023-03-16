@@ -1,5 +1,3 @@
-s (16 sloc)  557 Bytes
-
 #ifndef MAIN_H
 #define MAIN_H
 
