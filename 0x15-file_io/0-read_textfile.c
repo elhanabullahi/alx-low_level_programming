@@ -1,36 +1,45 @@
 #include "main.h"
 
 /**
- * read_textfile - program reads a text file and prints the letters.
- * @filename: filename.
- * @letters: numbers of letters printed.
+ * read_textfile - Function that reads a text file and prints it to the POSIX standard output.
+ * @filename: File to print from.
+ * @letters: Number of letters to print.
  *
- * Return: numbers of letters printed. It fails, returns 0.
+ * Return: The actual number of letters it could read and print.
+ *         If the file cannot be opened or read, return 0.
+ *         If filename is NULL, return 0.
+ *         If write fails or does not write the expected amount of bytes, return 0.
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
 	int fd;
-	ssize_t nrd, nwr;
-	char *buf;
+	char *buffer;
+	int read_len, write_len;
 
-	if (!filename)
+	if (filename == NULL)
 		return (0);
 
 	fd = open(filename, O_RDONLY);
+	buffer = malloc(sizeof(char) * letters);
 
-	if (fd == -1)
+	if (fd == -1 || buffer == NULL)
 		return (0);
 
-	buf = malloc(sizeof(char) * (letters));
-	if (!buf)
+	read_len = read(fd, buffer, letters);
+
+	if (read_len == -1)
+	{
+		free(buffer);
 		return (0);
+	}
 
-	nrd = read(fd, buf, letters);
-	nwr = write(STDOUT_FILENO, buf, nrd);
+	write_len = write(STDOUT_FILENO, buffer, read_len);
 
+	free(buffer);
 	close(fd);
 
-	free(buf);
+	if (write_len == -1)
+		return (0);
 
-	return (nwr);
+	return (write_len);
 } /*elhan*/
