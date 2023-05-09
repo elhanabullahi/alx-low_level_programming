@@ -1,45 +1,44 @@
 #include "main.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
 /**
- * read_textfile - Function that reads a text file and prints it to the POSIX standard output.
- * @filename: File to print from.
- * @letters: Number of letters to print.
+ * read_textfile - reads a text file and prints it to the POSIX standard output
+ * @filename: name of the file to read.
+ * @letters: number of letters it should read and print.
  *
- * Return: The actual number of letters it could read and print.
- *         If the file cannot be opened or read, return 0.
- *         If filename is NULL, return 0.
- *         If write fails or does not write the expected amount of bytes, return 0.
+ * Return: actual number of letters it could read and print.
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
 	int fd;
+	ssize_t lenr, lenw;
 	char *buffer;
-	int read_len, write_len;
 
 	if (filename == NULL)
 		return (0);
-
 	fd = open(filename, O_RDONLY);
-	buffer = malloc(sizeof(char) * letters);
-
-	if (fd == -1 || buffer == NULL)
+	if (fd == -1)
 		return (0);
-
-	read_len = read(fd, buffer, letters);
-
-	if (read_len == -1)
+	buffer = malloc(sizeof(char) * letters);
+	if (buffer == NULL)
+	{
+		close(fd);
+		return (0);
+	}
+	lenr = read(fd, buffer, letters);
+	close(fd);
+	if (lenr == -1)
 	{
 		free(buffer);
 		return (0);
 	}
-
-	write_len = write(STDOUT_FILENO, buffer, read_len);
-
+	lenw = write(STDOUT_FILENO, buffer, lenr);
 	free(buffer);
-	close(fd);
-
-	if (write_len == -1)
+	if (lenr != lenw)
 		return (0);
-
-	return (write_len);
+	return (lenw);
 } /*elhan*/
