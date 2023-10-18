@@ -1,61 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "search_algos.h"
 
-/**
- * recursive_search - searches for a value in an array of
- * integers using the Binary search algorithm
- *
- *
- * @array: input array
- * @size: size of the array
- * @value: value to search in
- * Return: index of the number
- */
-int recursive_search(int *array, size_t size, int value)
-{
-	size_t half = size / 2;
-	size_t i;
-
-	if (array == NULL || size == 0)
-		return (-1);
-
-	printf("Searching in array");
-
-	for (i = 0; i < size; i++)
-		printf("%s %d", (i == 0) ? ":" : ",", array[i]);
-
-	printf("\n");
-
-	if (half && size % 2 == 0)
-		half--;
-
-	if (value == array[half])
-		return ((int)half);
-
-	if (value < array[half])
-		return (recursive_search(array, half, value));
-
-	half++;
-
-	return (recursive_search(array + half, size - half, value) + half);
-}
+void print_array(int *array, size_t lo, size_t hi);
 
 /**
- * binary_search - calls to binary_search to return
- * the index of the number
- *
- * @array: input array
+ * binary_search - binary search algorithm
+ * @array: sorted array
  * @size: size of the array
- * @value: value to search in
- * Return: index of the number
+ * @value: element to search
+ * Return: index of the first match | -1 otherwise
  */
 int binary_search(int *array, size_t size, int value)
 {
-	int index;
+	int lo = 0, hi = size, mid;
 
-	index = recursive_search(array, size, value);
+	while (lo < hi)
+	{
+		print_array(array, lo, hi);
+		mid = (lo + hi - 1) / 2;
+		if (array[mid] == value)
+			return (mid);
 
-	if (index >= 0 && array[index] != value)
-		return (-1);
+		if (array[mid] > value)
+			hi = mid;
+		else
+			lo = mid + 1;
+	}
+	return (-1);
+}
 
-	return (index);
+/**
+ * print_array - print array
+ * @array: arary to print
+ * @lo: starting index
+ * @hi: end index
+ */
+void print_array(int *array, size_t lo, size_t hi)
+{
+	size_t i;
+
+	if (lo > hi)
+		return;
+
+	printf("Searching in array: %d", array[lo]);
+	for (i = lo + 1; i < hi; i++)
+		printf(", %d", array[i]);
+
+	printf("\n");
 }
